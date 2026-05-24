@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>⚡ MANNHAXORS // REAL LIVE API OVERRIDE v11.0</title>
+    <title>⚡ MANNHAXORS // REAL LIVE API OVERRIDE v12.0</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -59,6 +59,17 @@
         }
         button:hover { background: rgba(255, 255, 255, 0.08); border-color: var(--mhaxors-green); box-shadow: 0 0 12px rgba(0, 255, 102, 0.2); }
 
+        .btn-oauth {
+            background: linear-gradient(135deg, #4f46e5 0%, #bd00ff 100%);
+            border: 1px solid #6366f1;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .btn-oauth:hover {
+            box-shadow: 0 0 20px rgba(189, 0, 255, 0.5);
+            border-color: #fff;
+        }
+
         .cards-container { display: grid; grid-template-columns: 1fr; gap: 12px; max-height: 220px; overflow-y: auto; }
         .card-item { background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 10px; padding: 14px; cursor: pointer; }
         .card-item.selected { border-color: var(--mhaxors-green); background: rgba(0, 255, 102, 0.04); }
@@ -66,17 +77,27 @@
         .terminal { background: rgba(2, 4, 8, 0.9); border-radius: 10px; padding: 14px; height: 200px; overflow-y: auto; font-size: 12px; line-height: 1.5; font-weight: bold; }
         .log-row { margin-bottom: 4px; color: #a0aec0; }
         .log-time { color: #4a5568; margin-right: 8px; }
+        
+        .oauth-status-badge {
+            display: inline-block; padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: bold; margin-top: 8px;
+        }
     </style>
 </head>
 <body>
 
     <div class="glass-panel" style="background: rgba(10, 16, 26, 0.6);">
-        <h2>🛸 <span class="glow-blue">TRINAGLE</span> // REAL LIVE API FLOODER v11.0</h2>
-        <div class="motto">🏴‍☠️ РЕАЛЬНЫЕ FETCH-ЗАПРОСЫ К NEXTSERVER НА AMVERA // КОРПОРАЦИЯ СЛОМАНА</div>
+        <h2>🛸 <span class="glow-blue">MANNHAXORS</span> // AUTOMATED OAuth OVERRIDE v12.0</h2>
+        <div class="motto">🏴‍☠️ БОЛЬШЕ НИКАКИХ РУЧНЫХ UUID // ВХОД ЧЕРЕЗ ОФИЦИАЛЬНЫЙ ТОКЕН СЕССИИ ЖЮЛЯ</div>
         
-        <div class="input-group">
-            <label style="color: var(--mhaxors-purple); font-weight: bold;">🔑 ВВЕДИ СВОЙ ID ПОЛЬЗОВАТЕЛЯ (ИЗ /api/auth/session ДЛЯ ОБХОДА 401):</label>
-            <input type="text" id="hacker-user-id" value="62734945-0f34-4ae1-b6e2-1e2939fb09d3" placeholder="Вставь UUID юзера">
+        <div class="main-grid" style="grid-template-columns: 2fr 1fr; gap: 15px; align-items: center;">
+            <div>
+                <button class="btn-oauth" onclick="redirectToOAuthGateway()">🔑 ВОЙТИ ЧЕРЕЗ MANNHAXORS OAUTH</button>
+            </div>
+            <div style="text-align: center;">
+                <div id="oauth-status-view" class="oauth-status-badge" style="background: rgba(255,0,0,0.1); color: #ff3333; border: 1px solid rgba(255,0,0,0.2);">
+                    СТАТУС: АНОНИМНЫЙ МАМОНТ
+                </div>
+            </div>
         </div>
     </div>
 
@@ -133,7 +154,9 @@
     </div>
 
     <script>
-        const baseUrl = "https://mannru24-upsidedowncan.amvera.io";
+        // НАСТРОЙКИ КЛИЕНТА ДЛЯ СВЯЗИ С БЭКЕНДОМ АМВЕРЫ
+        const baseUrl = "https://mannru24-upsidedowncan.amvera.io"; 
+        const CLIENT_ID = "5d4e0347-7560-4864-81e8-b3a535e785f7"; 
         let selectedCardId = null;
 
         function logHttp(message, color = "#a0aec0") {
@@ -143,18 +166,54 @@
             consoleEl.scrollTop = consoleEl.scrollHeight;
         }
 
-        // Общие заголовки для атаки в обход 401
+        // РЕДИРЕКТ НА НАШЕ СУПЕР-ОКНО АВТОРИЗАЦИИ НА АМВЕРЕ
+        function redirectToOAuthGateway() {
+            const redirectUri = window.location.origin + window.location.pathname;
+            const oauthUrl = `${baseUrl}/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(redirectUri)}&state=67`;
+            logHttp(`ГЕНЕРАЦИЯ ССЫЛКИ: Редирект на шлюз Амвера...`, "#bd00ff");
+            window.location.href = oauthUrl;
+        }
+
+        // ОБРАБОТКА CALLBACK ПРИ ВОЗВРАТЕ С СЕРВЕРА
+        function checkOAuthCallback() {
+            const params = new URLSearchParams(window.location.search);
+            if (params.has("code")) {
+                const token = params.get("code");
+                localStorage.setItem("mannhax_oauth_token", token);
+                logHttp(`🔥 КРИТИЧЕСКИЙ ПЕРЕХВАТ: Токен авторизации извлечен из URL!`, "#00ff66");
+                logHttp(`[TOKEN]: ${token.slice(0, 25)}... СОХРАНЕНО В LOCALSTORAGE`, "#fff");
+                
+                // Чистим адресную строку от мусора
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+            
+            // Проверяем, есть ли сохранённый токен
+            const savedToken = localStorage.getItem("mannhax_oauth_token");
+            const statusBadge = document.getElementById("oauth-status-view");
+            if (savedToken) {
+                statusBadge.style.background = "rgba(0, 255, 102, 0.1)";
+                statusBadge.style.color = "var(--mhaxors-green)";
+                statusBadge.style.borderColor = "rgba(0, 255, 102, 0.3)";
+                statusBadge.innerText = "СТАТУС: DEV BOSS АВТОРИЗОВАН";
+            }
+        }
+
+        // ПОДПИСЬ ВСЕХ FETCH-ЗАПРОСОВ НАШИМ ПЕРЕХВАЧЕННЫМ ТОКЕНОМ
         function getHeaders() {
-            const uid = document.getElementById("hacker-user-id").value.trim();
+            const token = localStorage.getItem("mannhax_oauth_token") ?? "";
             return {
                 "accept": "*/*",
                 "accept-language": "ru-RU,ru;q=0.9",
                 "content-type": "application/json",
-                "X-User-Id": uid // Пробиваем сессию напрямую через ID!
+                // Шлём токен как полноценный Bearer-хедер! Бэкэнд Опуса его распарсит
+                "Authorization": `Bearer ${token}` 
             };
         }
 
-        // 1. НАСТОЯЩИЙ GET КАРТ ИЗ /api/user
+        // Вызываем проверку коллбека сразу при загрузке страницы хак-меню
+        checkOAuthCallback();
+
+        // 1. НАСТОЯЩИЙ GET КАРТ ИЗ /api/user С ОБНОВЛЕННЫМ ХЕДЕРОМ
         async function networkFetchCards() {
             logHttp("ЗАПУСК: fetch() -> GET /api/user...", "#00e5ff");
             try {
@@ -230,7 +289,7 @@
                 logHttp(`[HTTP STATUS]: ${response.status}`, response.ok ? "#00ff66" : "#ff3333");
                 const resData = await response.json();
                 logHttp(`[ОТВЕТ СЕРВЕРА]: ${JSON.stringify(resData)}`, "#fff");
-                networkFetchCards(); // Перечитать список карт с бэка!
+                networkFetchCards();
             } catch(e) {
                 logHttp(`[СБОЙ ЗАПРОСА POST]: ${e.message}`, "#ff3333");
             }
@@ -257,7 +316,7 @@
                 logHttp(`[HTTP STATUS]: ${response.status}`, response.ok ? "#00ff66" : "#ff3333");
                 const resText = await response.text();
                 logHttp(`[ОТВЕТ СЕРВЕРА]: ${resText}`, "#fff");
-                networkFetchCards(); // Обновить баланс карты на экране прямо из базы!
+                networkFetchCards();
             } catch(e) {
                 logHttp(`[СБОЙ ЗАПРОСА ТРАНЗАКЦИИ]: ${e.message}`, "#ff3333");
             }
